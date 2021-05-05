@@ -11,6 +11,7 @@ const objectIDCheck = (value) => {
 };
 
 module.exports = {
+  BsonObjectID: Joi.custom(objectIDCheck, OBIDCHECK).required(),
   Newuser: Joi.object({
     _id: Joi.custom(objectIDCheck, OBIDCHECK).required(),
     name: Joi.string().min(2).max(100).required(),

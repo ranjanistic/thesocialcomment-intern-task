@@ -38,6 +38,9 @@ class User {
     return { userID: doc._id, token, ok: true };
   }
 
+  async findByID(userID) {
+    return await Users().findOne({ _id: ObjectId(userID) });
+  }
   getUserIDFromRequest(req) {
     let token = null;
     if (req.headers.authorization) {

@@ -1,4 +1,10 @@
-const { createNew, react, respond } = require("../workers/post");
+const {
+  createNew,
+  react,
+  respond,
+  allPostsWithReaction,
+  allCommentedPosts,
+} = require("../workers/post");
 const { getUserIDFromRequest } = require("../workers/user");
 
 module.exports = {
@@ -24,6 +30,17 @@ module.exports = {
       ...req.body,
       userID: getUserIDFromRequest(req),
     });
+    return res.json(response);
+  },
+  allPostsWithReaction: async (req, res, next) => {
+    let response = await allPostsWithReaction(
+      getUserIDFromRequest(req),
+      req.params.reaction
+    );
+    return res.json(response);
+  },
+  allCommentedPosts: async (req, res, next) => {
+    let response = await allCommentedPosts(getUserIDFromRequest(req));
     return res.json(response);
   },
 };

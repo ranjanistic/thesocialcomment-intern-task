@@ -2,7 +2,13 @@ const { ObjectId } = require("mongodb"),
   string = require("../strings"),
   { Posts } = require("../database/database"),
   { INVALIDPOST } = require("../strings"),
-  { Newpost, PostReact, PostRespond } = require("../database/models");
+  {
+    Newpost,
+    PostReact,
+    PostRespond,
+    BsonObjectID,
+  } = require("../database/models"),
+  User = require("./user");
 
 class Post {
   async createNew(
@@ -70,6 +76,69 @@ class Post {
       };
     const doc = await Posts().findOneAndUpdate(filter, update);
     return { ok: doc.ok === 1, postID: value.postID };
+  }
+
+  async allPostsWithReaction(userID, reaction = "likers") {
+    const { error, value } = BsonObjectID.validate(userID);
+    if (error) return { error: error.message, ok: false };
+
+    let posts = await Posts().find({ userID: value }).toArray();
+    posts = await Promise.all(
+      posts.map(async (post) => {
+        let reactors = [];
+        await Promise.all(
+          post.reacts.map(async (react) => {
+            if (reaction === "dislikers") {
+              if (!react.like) {
+                const user = await User.findByID(react.userID);
+                reactors.push({
+                  userID: user._id,
+                  name: user.name,
+                });
+              }
+            } else {
+              if (react.like) {
+                const user = await User.findByID(react.userID);
+                reactors.push({
+                  userID: user._id,
+                  name: user.name,
+                });
+              }
+            }
+          })
+        );
+        return {
+          postID: post._id,
+          title: post.title,
+          content: post.content,
+          tags: post.tags,
+          [["likers", "dislikers"].includes(reaction)
+            ? reaction
+            : "likers"]: reactors,
+        };
+      })
+    );
+    return { ok: true, posts };
+  }
+
+  async allCommentedPosts(userID) {
+    const { error, value } = BsonObjectID.validate(userID);
+    if (error) return { error: error.message, ok: false };
+    let posts = await Posts()
+      .find({ responses: { $elemMatch: { userID: value } } })
+      .toArray();
+    posts = posts.map((post) => {
+      let comments = [];
+      post.responses
+        .filter((response) => String(response.userID) === String(value))
+        .forEach((resp) => comments.push(resp.comment));
+      return {
+        postID: post._id,
+        title: post.title,
+        comments,
+      };
+    });
+    return { ok: true, posts };
   }
 }
 
