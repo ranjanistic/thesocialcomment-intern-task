@@ -1,8 +1,7 @@
-name: Heroku Deploy
-
+name: CI Testing
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
     paths-ignore:
       - "test/**"
@@ -10,7 +9,7 @@ on:
       - ".sample.env"
 
 jobs:
-  deploy:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -38,9 +37,3 @@ jobs:
       run: npm test
     - name: Building
       run: npm run build --if-present
-    - name: Heroku Backend Deploy
-      uses: akhileshns/heroku-deploy@v3.12.12
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-        heroku_email: ${{secrets.HEROKU_EMAIL_ID}}
