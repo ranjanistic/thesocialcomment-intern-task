@@ -1,5 +1,4 @@
-const { Router } = require("express"),
-  post = Router(),
+const post = require("express").Router(),
   handler = require("../handlers/post");
 
 post.get("/", handler.post);

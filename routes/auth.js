@@ -1,10 +1,8 @@
-const { Router } = require("express"),
-  auth = Router(),
+const auth = require("express").Router(),
   handler = require("../handlers/auth");
 
-auth.get("/", handler.auth);
+auth.all("/", handler.auth);
 auth.post("/login", handler.login);
 auth.post("/signup", handler.signup);
-auth.get("/logout", handler.logout);
 
 module.exports = auth;
