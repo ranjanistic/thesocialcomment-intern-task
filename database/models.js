@@ -17,7 +17,7 @@ module.exports = {
     name: Joi.string().min(2).max(100).required(),
     email: Joi.string().email().required(),
     gender: Joi.string().min(0).max(0).allow(MALE, FEMALE, OTHERS).required(),
-    password: Joi.string().min(6).max(50),
+    password: Joi.string().min(6).max(50).required(),
     createdOn: Joi.date().required(),
   }),
   Olduser: Joi.object({
