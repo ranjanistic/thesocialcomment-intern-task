@@ -1,9 +1,6 @@
-name: Heroku Deploy
-
+name: CI Testing
 
 on:
-  push: 
-    branches: [ testing ]
   pull_request:
     branches: [ main ]
     paths-ignore:
