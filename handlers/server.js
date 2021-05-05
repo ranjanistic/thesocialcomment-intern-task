@@ -9,16 +9,23 @@ module.exports = {
         Welcome to Priyanshu Ranjan's SocialComments Internship Task.
         </br></br>
         Following are the available endpoints (POST):</br></br>
-        > /auth/login</br>
-            body = { email:String, password:String }</br>
         > /auth/signup</br>
-            body = { name:String, email:String, password:String, gender:[F/M/O]:String }</br>
+            request body = { name:String, email:String, password:String, gender:[F/M/O]:String }</br>
+        > /auth/login</br>
+            request body = { email:String, password:String }</br>
+            You'll receive a token. Add that to your request Authorization header for following endpoints.
+            </br></br>
         > /post/create</br>
-            body = { email:String, password:String }</br>
+            request body = { title:String, content:String, tags:Array (optional) }</br>
         > /post/react</br>
-            body = { email:String, password:String }</br>
+            request body = { postID:String, like:Boolean }</br>
         > /post/respond</br>
-            body = { email:String, password:String }</br>
+            request body = { postID:String, comment:String }</br>
+        > /post/all | /post/all/liked </br>
+            request body = { }</br>
+        > /post/commented</br>
+            request body = { }</br>
+
     `);
   },
   notFound: (req, res) => {
