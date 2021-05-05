@@ -28,7 +28,7 @@ module.exports = {
     userID: Joi.custom(objectIDCheck, OBIDCHECK).required(),
     title: Joi.string().min(2).max(2000).required(),
     content: Joi.string().min(1).max(20000).required(),
-    tags: Joi.array().min(0).max(20),
+    tags: Joi.array().min(0).max(20).items(Joi.string()),
     createdOn: Joi.date().required(),
     reacts: Joi.array().min(0).required(),
     responses: Joi.array().min(0).required(),
