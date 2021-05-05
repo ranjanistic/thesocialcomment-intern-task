@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken"),
   { SESSIONKEY } = require("../config/env"),
   User = require("../workers/user");
+const { getUserIDFromRequest } = require("../workers/user");
 
 module.exports = {
   auth: (req, res, next) => {
@@ -8,12 +9,7 @@ module.exports = {
   },
   authcheck: (req, res, next) => {
     try {
-      let token = req.headers.authorization.trim();
-      token = token.includes(" ") ? token.split(" ")[1] : token;
-      const decodedToken = jwt.verify(token, SESSIONKEY);
-      const userId = decodedToken._id;
-      console.log(decodedToken);
-      if (req.body.userId && req.body.userId !== userId) {
+      if (!getUserIDFromRequest(req)) {
         throw "Invalid";
       } else {
         next();

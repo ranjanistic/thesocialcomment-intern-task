@@ -32,10 +32,26 @@ class User {
       return { error: string.USERNOTFOUND, email: value.email, ok: false };
     const matched = await bycrpt.compare(value.password, doc.password);
     if (!matched) return { error: string.CREDERROR, ok: false };
-    const token = jwt.sign({ _id: doc._id }, SESSIONKEY, {
+    const token = jwt.sign({ userID: doc._id }, SESSIONKEY, {
       expiresIn: "24h",
     });
     return { userID: doc._id, token, ok: true };
+  }
+
+  getUserIDFromRequest(req) {
+    let token = null;
+    if (req.headers.authorization) {
+      token = req.headers.authorization.trim();
+    } else if (req.body.token) {
+      token = req.body.token.trim();
+    } else return null;
+    try {
+      token = token.includes(" ") ? token.split(" ")[1] : token;
+      const decodedToken = jwt.verify(token, SESSIONKEY);
+      return decodedToken.userID;
+    } catch {
+      return null;
+    }
   }
 }
 
