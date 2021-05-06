@@ -1,5 +1,6 @@
 const { MongoClient } = require("mongodb"),
   { DBURL, DBNAME } = require("../config/env");
+const {collection:{POSTS,USERS}} = require("../string");
 
 let db;
 
@@ -18,10 +19,10 @@ module.exports = {
    *
    * @returns {import("mongodb").Collection}
    */
-  Users: () => db.collection("users"),
+  Users: () => db.collection(USERS),
   /**
    *
    * @returns {import("mongodb").Collection}
    */
-  Posts: () => db.collection("posts"),
+  Posts: () => db.collection(POSTS),
 };

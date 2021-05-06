@@ -1,11 +1,13 @@
 const post = require("express").Router(),
+  string  = require("../string"),
   handler = require("../handlers/post");
 
-post.get("/", handler.post);
-post.post("/create", handler.create);
-post.post("/react", handler.react);
-post.post("/respond", handler.respond);
-post.post("/all/:reaction", handler.allPostsWithReaction);
-post.post("/all", handler.allPostsWithReaction);
-post.post("/commented", handler.allCommentedPosts);
+post.get(string.path.ROOT, handler.post);
+post.post(string.path.CREATE, handler.create);
+post.post(string.path.REACT, handler.react);
+post.post(string.path.RESPOND, handler.respond);
+post.post(string.path.ALLPOSTREACT, handler.allPostsWithReaction);
+post.post(string.path.ALLPOST, handler.allPosts);
+post.post(string.path.ALLPOSTCOMMENT, handler.allCommentedPosts);
+
 module.exports = post;
