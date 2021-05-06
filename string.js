@@ -30,7 +30,7 @@ module.exports = {
   USERCREATED: "User created",
   OBIDCHECK: "ObjectID validation",
   GENDERCHECK: "Gender key check",
-  INVALIDPOST: "Invalid credentials",
+  INVALIDPOST: "Invalid post",
   UNAUTHREQ: "Unauthorized request.",
   PASSREGEX: "^(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{6,50}$",
   MALE: "M",
