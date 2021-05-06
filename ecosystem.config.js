@@ -1,5 +1,6 @@
 module.exports = {
-    apps : [{
+  apps: [
+    {
       name: "socialcomment",
       script: "./server.js",
       instances: "max",
@@ -8,6 +9,7 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: "production",
-      }
-    }]
-}
+      },
+    },
+  ],
+};

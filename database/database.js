@@ -1,6 +1,8 @@
 const { MongoClient } = require("mongodb"),
   { DBURL, DBNAME } = require("../config/env");
-const {collection:{POSTS,USERS}} = require("../string");
+const {
+  collection: { POSTS, USERS },
+} = require("../string");
 
 let db;
 

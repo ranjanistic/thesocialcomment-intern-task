@@ -1,9 +1,8 @@
 name: Heroku Deploy
 
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
       - "test/**"
       - "README.md"
@@ -11,7 +10,6 @@ on:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,28 +17,28 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Using Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Clean Installing Dependencies
-      run: npm ci
-    - name: Environment setup
-      run : |
-        touch .env
-        echo "NODE_ENV=${{secrets.NODE_ENV}}" >> .env
-        echo "PROJECTKEY=${{secrets.PROJECTKEY}}" >> .env
-        echo "DBNAME=${{secrets.DBNAME}}" >> .env
-        echo "DBURL=${{secrets.DBURL}}" >> .env
-        echo "SESSIONKEY=${{secrets.SESSIONKEY}}" >> .env
-    - name: Running tests
-      run: npm test
-    - name: Building
-      run: npm run build --if-present
-    - name: Heroku Backend Deploy
-      uses: akhileshns/heroku-deploy@v3.12.12
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-        heroku_email: ${{secrets.HEROKU_EMAIL_ID}}
+      - uses: actions/checkout@v2
+      - name: Using Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Clean Installing Dependencies
+        run: npm ci
+      - name: Environment setup
+        run: |
+          touch .env
+          echo "NODE_ENV=${{secrets.NODE_ENV}}" >> .env
+          echo "PROJECTKEY=${{secrets.PROJECTKEY}}" >> .env
+          echo "DBNAME=${{secrets.DBNAME}}" >> .env
+          echo "DBURL=${{secrets.DBURL}}" >> .env
+          echo "SESSIONKEY=${{secrets.SESSIONKEY}}" >> .env
+      - name: Running tests
+        run: npm test
+      - name: Building
+        run: npm run build --if-present
+      - name: Heroku Backend Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL_ID}}

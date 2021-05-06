@@ -49,8 +49,10 @@ npm test
 
 _All endpoints accept **POST** request method only, unless specified._
 
-- Register User ```/auth/signup```
+- Register User `/auth/signup`
+
   - Request Body
+
     - name:String
     - email:String
     - gender:String (M/F/O)
@@ -60,8 +62,10 @@ _All endpoints accept **POST** request method only, unless specified._
     - userID:String
     - ok:Boolean
 
-- Login User ```/auth/login```
+- Login User `/auth/login`
+
   - Request Body
+
     - email:String
     - password:String
 
@@ -72,44 +76,51 @@ _All endpoints accept **POST** request method only, unless specified._
 
   > The provided token contains the userID. This token is required for authorization.
 
-_NOTE: For following endpoints, either the **Authorization header** needs to have the **token** provided on login, **OR** the **request body should contain** ```token``` key with the token, along with other items._
+_NOTE: For following endpoints, either the **Authorization header** needs to have the **token** provided on login, **OR** the **request body should contain** `token` key with the token, along with other items._
 
-- Create Post ```/post/create```
+- Create Post `/post/create`
+
   - Request Body
+
     - title: String
     - content: String
     - tags: Array(String)
-  
+
   - Response
     - postID: String
     - ok: Boolean
 
-- Post like/dislike ```/post/react```
+- Post like/dislike `/post/react`
+
   - Request Body
+
     - postID: String
     - like: Boolean (true/false)
-  
+
   - Response
     - postID: String
     - ok: Boolean
 
-- Post comment ```/post/respond```
+- Post comment `/post/respond`
+
   - Request Body
+
     - postID: String
     - comment: String
-  
+
   - Response
     - postID: String
     - ok: Boolean
 
-- All posts with liked users ```/post/all/likers```
+- All posts with liked users `/post/all/likers`
+
   - Request Body
-  
+
   - Response
     - ok: Boolean
     - posts: Array (List of posts)
 
-- All posts with user's comment ```/post/commented```
+- All posts with user's comment `/post/commented`
   - Request Body
   - Response
     - ok: Boolean
@@ -117,16 +128,18 @@ _NOTE: For following endpoints, either the **Authorization header** needs to hav
 
 ### Extra endpoints
 
-- All posts of user ```/post/all```
+- All posts of user `/post/all`
+
   - Request Body
-  
+
   - Response
     - ok: Boolean
     - posts: Array (List of posts)
 
-- All posts with disliked users ```/post/all/dislikers```
+- All posts with disliked users `/post/all/dislikers`
+
   - Request Body
-  
+
   - Response
     - ok: Boolean
     - posts: Array (List of posts)

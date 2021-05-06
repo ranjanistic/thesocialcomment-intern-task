@@ -1,19 +1,9 @@
 const worker = require("../workers/user"),
-  { UNAUTHREQ } = require("../string"),
+  { UNAUTHREQ, AUTHHTML } = require("../string"),
   { getUserIDFromRequest } = require("../workers/user");
 
 module.exports = {
-  auth: (req, res, next) => {
-    res.send(`
-      Following are the available endpoints (POST):</br></br>
-      > /auth/signup</br>
-        request body = { name:String, email:String, password:String, gender:[F/M/O]:String }</br>
-      > /auth/login</br>
-        request body = { email:String, password:String }</br>
-        You'll receive a token. Add that to your request Authorization header, or include that in request body as 'token'.
-        </br></br>
-    `);
-  },
+  auth: (_, res) => res.send(AUTHHTML),
   authcheck: (req, res, next) => {
     try {
       if (getUserIDFromRequest(req)) next();
@@ -22,6 +12,6 @@ module.exports = {
       res.status(401).json({ error: e.message });
     }
   },
-  login: async (req, res, next) => res.json(await worker.existingLogin(req.body)),
-  signup: async (req, res, next) => res.json(await worker.createNew(req.body)),
+  login: async (req, res) => res.json(await worker.existingLogin(req.body)),
+  signup: async (req, res) => res.json(await worker.createNew(req.body)),
 };

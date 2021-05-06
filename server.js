@@ -11,9 +11,9 @@ server.use(
   helmet(),
   express.json(),
   express.urlencoded({ extended: true }),
-  express.raw()
+  express.raw(),
+  cors()
 );
-server.use(cors());
 
 initDBConnection((error, dbname) => {
   if (error) return console.log(string.DBCONNFAILED);
