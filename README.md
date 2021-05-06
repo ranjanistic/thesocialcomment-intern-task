@@ -72,7 +72,7 @@ _All endpoints accept **POST** request method only, unless specified._
 
   > The provided token contains the userID. This token is required for authorization.
 
-_NOTE: For following endpoints, either the **Authorization header** needs to have the **token** provided on login, **OR** the **request body should contain** ```token``` key with the token._
+_NOTE: For following endpoints, either the **Authorization header** needs to have the **token** provided on login, **OR** the **request body should contain** ```token``` key with the token, along with other items._
 
 - Create Post ```/post/create```
   - Request Body
